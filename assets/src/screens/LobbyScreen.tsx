@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/core'
 import React, { useContext, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Channel } from 'phoenix'
 import { useTranslation } from 'react-i18next'
 
@@ -13,6 +13,7 @@ import { Characters_characters } from '../graphql/__generated__/Characters'
 import Layout from '../Layout'
 import Waiting from '../components/Waiting'
 import LobbyChat from '../components/Chat/LobbyChat'
+import { resetMessages, storeMessage } from '../actions'
 
 type Props = {}
 
@@ -43,10 +44,8 @@ const LobbyScreen: React.FC<Props> = () => {
   const route = useRoute()
   const navigation = useNavigation()
   navigation.setOptions({ headerShown: false })
-  const [messages, setMessages] = useState<ChatMessage[]>([])
-
-  const auth = useSelector((state: State) => state.auth)
   const [t] = useTranslation()
+  const dispatch = useDispatch()
 
   const socket = useContext(SocketContext)
   const { character, token, currentUser } = useSelector((state: State) => ({
@@ -88,6 +87,7 @@ const LobbyScreen: React.FC<Props> = () => {
     channel
       .join()
       .receive('ok', (resp) => {
+        dispatch(resetMessages())
         setChannel(channel)
         channel.on('new_player', ({ user, character, health, active }) => {
           if (user.id != currentUser!.id) {
@@ -106,7 +106,7 @@ const LobbyScreen: React.FC<Props> = () => {
         })
 
         channel.on(NEW_MESSAGE, (message) => {
-          setMessages([...messages, message])
+          dispatch(storeMessage(message))
         })
 
         channel.on('damages', ({ defenderId, damages }) => {
@@ -208,7 +208,6 @@ const LobbyScreen: React.FC<Props> = () => {
 
       {channel ? (
         <LobbyChat
-          messages={messages}
           channel={channel}
           user={me}
           onSendNewMessage={sendMessage}

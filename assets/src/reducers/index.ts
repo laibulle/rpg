@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Action } from '../actions'
 import { Login_auth } from '../graphql/__generated__/Login'
 import { Characters_characters } from '../graphql/__generated__/Characters'
+import { ChatMessage } from '../screens/LobbyScreen'
 
 export type State = {
   auth: AuthState
@@ -27,22 +28,32 @@ const auth = (state: AuthState = {}, action: Action): AuthState => {
   }
 }
 
-type GameState = { selectedCharacter?: Characters_characters }
+type GameState = {
+  selectedCharacter?: Characters_characters
+  messages: ChatMessage[]
+}
 
-const game = (state: GameState = {}, action: Action): GameState => {
+const game = (
+  state: GameState = { messages: [] },
+  action: Action
+): GameState => {
   switch (action.type) {
     case 'STORE_SELECTED_CHARACTER':
       return { ...state, selectedCharacter: action.selectedCharacter }
     case 'STORE_STATE':
       return { ...action.state.game }
+    case 'RESET_MESSAGES':
+      return { ...state, messages: [] }
+    case 'STORE_MESSAGE':
+      return { ...state, messages: [...state.messages, action.message] }
     case 'RESET':
-      return {}
+      return { ...initGame }
     default:
       return state
   }
 }
 
-const initGame: GameState = {}
+const initGame: GameState = { messages: [] }
 const initAuth: AuthState = {}
 
 const initData = (): State => ({

@@ -6,19 +6,15 @@ import moment from 'moment'
 import ChatInput from './ChatInput'
 import { Text, Spacing } from '../../rickui'
 import { Channel } from 'phoenix'
-import { ThemeContext } from '@emotion/react'
-import {
-  Characterstatus,
-  ChatMessage,
-  NEW_MESSAGE,
-} from '../../screens/LobbyScreen'
+import { Characterstatus, ChatMessage } from '../../screens/LobbyScreen'
+import { useSelector } from 'react-redux'
+import { State } from '../../reducers'
 
 type Props = {
   channel: Channel
   lobby: string
   user?: Characterstatus
   users: Characterstatus[]
-  messages: ChatMessage[]
   onSendNewMessage: (message: ChatMessage) => void
 }
 
@@ -26,11 +22,9 @@ const LobbyChat: React.FC<Props> = ({
   lobby,
   user,
   users,
-  messages,
   onSendNewMessage,
 }) => {
-  const theme = useContext(ThemeContext)
-
+  const messages = useSelector((state: State) => state.game.messages)
   if (!user) return <></>
 
   return (
