@@ -11,9 +11,12 @@ const ChatInput: React.FC<Props> = ({ onSend }) => {
   const [text, setText] = useState('')
 
   const handleSend = () => {
-    setText('')
-    onSend(text)
+    if (isValid()) {
+      setText('')
+      onSend(text)
+    }
   }
+  const isValid = () => text.length > 0
 
   return (
     <View
@@ -34,7 +37,7 @@ const ChatInput: React.FC<Props> = ({ onSend }) => {
       />
       <View
         style={{
-          backgroundColor: text == '' ? 'transparent' : theme.primaryColor,
+          backgroundColor: !isValid() ? 'transparent' : theme.primaryColor,
           padding: 10,
         }}
       >

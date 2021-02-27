@@ -126,6 +126,7 @@ const LobbyScreen: React.FC<Props> = () => {
         channel.on('ready', ({}) => {
           console.log('ready')
         })
+
         console.log('Joined successfully', resp)
       })
       .receive('error', (resp) => {

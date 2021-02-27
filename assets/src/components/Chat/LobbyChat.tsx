@@ -46,8 +46,6 @@ const LobbyChat: React.FC<Props> = ({
       />
       <ScrollView style={{ maxHeight: '300px' }}>
         {messages.map((msg, i) => {
-          console.log(msg.userId)
-          console.log(users)
           const user = users.find((u) => u.user.id === msg.userId)
           return (
             <Spacing key={`chat-${lobby}-message-${i}`} spacings={['mb-1']}>
