@@ -1,0 +1,18 @@
+{
+  "skip_files": [
+    "test",
+    "deps",
+    "lib/rpg_web/router.ex",
+    "lib/rpg_web.ex",
+    "lib/rpg_web/views/error_helpers.ex",
+    "lib/rpg/release_tasks.ex",
+    "lib/rpg/application.ex",
+    "lib/rpg_web/gettext.ex",
+    "lib/rpg/repo.ex",
+    "lib/rpg_web/endpoint.ex",
+    "lib/rpg_web/gettext.ex",
+    "lib/rpg_web/presence.ex",
+    "lib/rpg_web/controllers/page_controller.ex",
+    "lib/rpg_web/telemetry.ex"
+  ]
+}

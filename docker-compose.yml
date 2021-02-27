@@ -1,0 +1,16 @@
+version: "3.4"
+volumes:
+  postgres-data:
+    driver: local
+
+services:
+  postgres:
+    image: postgres:13.1-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=rpg_dev
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data

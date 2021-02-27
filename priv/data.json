@@ -1,0 +1,108 @@
+{
+  "users": [
+    {
+      "email": "janedoe@rpg.dev",
+      "password": "P@ssw0rd",
+      "name": "Jane Doe",
+      "characters": [
+        {
+          "skin": 2,
+          "rank": 1,
+          "health": 3,
+          "attack": 4,
+          "magik": 3,
+          "defense": 1,
+          "skill_points": 1,
+          "ko": true
+        },
+        {
+          "skin": 4,
+          "rank": 1,
+          "health": 3,
+          "attack": 4,
+          "magik": 3,
+          "defense": 1,
+          "skill_points": 1,
+          "ko": false
+        },
+        {
+          "skin": 12,
+          "rank": 1,
+          "health": 3,
+          "attack": 4,
+          "magik": 3,
+          "defense": 1,
+          "skill_points": 1,
+          "ko": false
+        },
+        {
+          "skin": 11,
+          "rank": 1,
+          "health": 3,
+          "attack": 4,
+          "magik": 3,
+          "defense": 1,
+          "skill_points": 1,
+          "ko": false
+        },
+        {
+          "skin": 7,
+          "rank": 1,
+          "health": 3,
+          "attack": 4,
+          "magik": 3,
+          "defense": 1,
+          "skill_points": 1,
+          "ko": false
+        }
+      ]
+    },
+    {
+      "email": "johndoe@rpg.dev",
+      "password": "P@ssw0rd",
+      "name": "John Doe",
+      "characters": [
+        {
+          "skin": 1,
+          "rank": 1,
+          "health": 3,
+          "attack": 4,
+          "magik": 3,
+          "defense": 1,
+          "skill_points": 1,
+          "ko": true
+        },
+        {
+          "skin": 8,
+          "rank": 1,
+          "health": 3,
+          "attack": 4,
+          "magik": 3,
+          "defense": 1,
+          "skill_points": 1,
+          "ko": false
+        },
+        {
+          "skin": 2,
+          "rank": 1,
+          "health": 3,
+          "attack": 4,
+          "magik": 3,
+          "defense": 1,
+          "skill_points": 1,
+          "ko": false
+        },
+        {
+          "skin": 5,
+          "rank": 1,
+          "health": 3,
+          "attack": 4,
+          "magik": 3,
+          "defense": 1,
+          "skill_points": 1,
+          "ko": false
+        }
+      ]
+    }
+  ]
+}

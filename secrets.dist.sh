@@ -1,0 +1,7 @@
+# expo login
+
+export DELIVER_USERNAME=xxxxxx
+export DELIVER_PASSWORD=xxxxxxx
+export FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD=xxxxxxx
+export MAILJET_API_KEY=xxxxxxxxxxxxxx
+export MAILJET_PRIVATE_KEY=xxxxxxxxxxxxxxxxx

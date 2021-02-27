@@ -1,0 +1,5 @@
+build:
+  docker:
+    web: Dockerfile
+run:
+  web: /bin/bash -c "./rel/rpg/bin/rpg eval 'Rpg.Release.reset()' && ./rel/rpg/bin/rpg start"
