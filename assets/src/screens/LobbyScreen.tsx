@@ -12,15 +12,24 @@ import HealthBar from '../components/HealthBar'
 import { Characters_characters } from '../graphql/__generated__/Characters'
 import Layout from '../Layout'
 import Waiting from '../components/Waiting'
+import LobbyChat from '../components/Chat/LobbyChat'
 
 type Props = {}
 
-type Characterstatus = {
+export type Characterstatus = {
   character: Characters_characters
   health: number
   user: { id: string; name: string }
   active: boolean
 }
+
+export type ChatMessage = {
+  userId: string
+  body: string
+  createdAt: string
+}
+
+export const NEW_MESSAGE = 'new_msg'
 
 const arenas = [
   require('../../assets/arenas/1.jpg'),
@@ -34,6 +43,9 @@ const LobbyScreen: React.FC<Props> = () => {
   const route = useRoute()
   const navigation = useNavigation()
   navigation.setOptions({ headerShown: false })
+  const [messages, setMessages] = useState<ChatMessage[]>([])
+
+  const auth = useSelector((state: State) => state.auth)
   const [t] = useTranslation()
 
   const socket = useContext(SocketContext)
@@ -53,6 +65,10 @@ const LobbyScreen: React.FC<Props> = () => {
   const { lobby }: { lobby: string } = route.params! as any
   const [theme] = useContext(ThemeContext)
   const [channel, setChannel] = useState<Channel | undefined>()
+
+  const sendMessage = async (message: ChatMessage) => {
+    channel!.push(NEW_MESSAGE, message)
+  }
 
   useEffect(() => {
     const process = async () => {
@@ -87,6 +103,10 @@ const LobbyScreen: React.FC<Props> = () => {
           } else {
             setMe({ user, character, health, active })
           }
+        })
+
+        channel.on(NEW_MESSAGE, (message) => {
+          setMessages([...messages, message])
         })
 
         channel.on('damages', ({ defenderId, damages }) => {
@@ -184,6 +204,28 @@ const LobbyScreen: React.FC<Props> = () => {
           </View>
         </View>
       </View>
+
+      {channel ? (
+        <LobbyChat
+          messages={messages}
+          channel={channel}
+          user={me}
+          onSendNewMessage={sendMessage}
+          users={[
+            me
+              ? me
+              : ({
+                  user: { id: '', name: '' },
+                  active: false,
+                  health: 0,
+                } as any),
+            opponent,
+          ]}
+          lobby={lobby}
+        />
+      ) : (
+        <></>
+      )}
     </Layout>
   )
 }

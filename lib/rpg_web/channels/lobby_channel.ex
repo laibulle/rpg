@@ -99,8 +99,8 @@ defmodule RpgWeb.RoomChannel do
     {:noreply, socket}
   end
 
-  def handle_in("new_msg", %{"body" => body}, socket) do
-    broadcast!(socket, "new_msg", %{body: body})
+  def handle_in("new_msg", %{"body" => _body, "userId" => _user_id} = message, socket) do
+    broadcast!(socket, "new_msg", message)
     {:noreply, socket}
   end
 
