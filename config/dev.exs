@@ -28,6 +28,11 @@ config :rpg, RpgWeb.Endpoint,
     ]
   ]
 
+config :rpg, Rpg.Mailer,
+  adapter: Bamboo.MailjetAdapter,
+  api_key: System.fetch_env!("MAILJET_API_KEY"),
+  api_private_key: System.fetch_env!("MAILJET_PRIVATE_KEY")
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

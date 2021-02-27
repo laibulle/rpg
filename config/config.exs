@@ -26,11 +26,6 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-config :rpg, Rpg.Mailer,
-  adapter: Bamboo.MailjetAdapter,
-  api_key: System.fetch_env!("MAILJET_API_KEY"),
-  api_private_key: System.fetch_env!("MAILJET_PRIVATE_KEY")
-
 config :rpg, Rpg.Guardian,
   issuer: "rpg",
   secret_key: "Im1rOGqJiq+VrqSztII8jsQTWv9Mvucv8tpZYHBn54xfnrVu/Y6pB21ob0pSuoVR"
