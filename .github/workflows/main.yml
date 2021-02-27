@@ -22,6 +22,7 @@ jobs:
         with:
           otp-version: '22.2'
           elixir-version: '1.11'
+      #- run: cp secrets.dist.sh secrets.sh
       - run: MIX_ENV=test mix deps.get
       - run: MIX_ENV=test mix test
       - run: MIX_ENV=test mix coveralls.github
