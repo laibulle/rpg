@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { TextInput, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { theme } from '../../rickui'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
   onSend: (value: string) => void
@@ -9,6 +10,7 @@ type Props = {
 
 const ChatInput: React.FC<Props> = ({ onSend }) => {
   const [text, setText] = useState('')
+  const [t] = useTranslation()
 
   const handleSend = () => {
     if (isValid()) {
@@ -33,7 +35,7 @@ const ChatInput: React.FC<Props> = ({ onSend }) => {
         style={{ width: '100%', padding: 5, color: 'white' }}
         value={text}
         onChangeText={setText}
-        placeholder="Write your message"
+        placeholder={t('sendMessage')}
       />
       <View
         style={{

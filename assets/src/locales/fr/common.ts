@@ -4,6 +4,7 @@ export default {
   play: '🕹️ Jouons',
   youWin: 'Tu as gagné !',
   youLoose: 'Tu as perdu',
+  writeMessage: 'Saisi ton message ici',
   lobby: { placeholder: 'Entre ton lobby' },
   goHome: 'Rentre chez toi',
   fight: '🔫 Affronter',

@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 const isCharacterKo = (character: Characters_characters) => {
   return character.reanimateAt == null
     ? false
-    : moment().isAfter(character.reanimateAt)
+    : moment().isBefore(character.reanimateAt)
 }
 
 const LoginScreen: React.FC<Props> = () => {
