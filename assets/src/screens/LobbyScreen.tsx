@@ -14,15 +14,9 @@ import Layout from '../Layout'
 import Waiting from '../components/Waiting'
 import LobbyChat from '../components/Chat/LobbyChat'
 import { resetMessages, storeMessage } from '../actions'
+import CharacterFight, { Characterstatus } from '../components/CharacterFight'
 
 type Props = {}
-
-export type Characterstatus = {
-  character: Characters_characters
-  health: number
-  user: { id: string; name: string }
-  active: boolean
-}
 
 export type ChatMessage = {
   userId: string
@@ -154,56 +148,20 @@ const LobbyScreen: React.FC<Props> = () => {
           { flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' },
         ]}
       >
-        <View style={{ alignItems: 'center' }}>
-          <HealthBar
-            currentHealth={me?.health || character.health}
-            maxHealth={character.health}
-          />
-          <Spacing spacings="mb-2" />
+        <CharacterFight
+          isMe={true}
+          status={me}
+          winner={winner}
+          onleave={() => {
+            leave()
+          }}
+          onAttack={() => {
+            setMe({ ...me!, active: false })
+            channel!.push('attack', {})
+          }}
+        />
 
-          <CharacterOverview character={character} />
-          <Spacing spacings="mb-2" />
-
-          {me && me.active && !winner ? (
-            <Button
-              title={t('attack')}
-              onPress={() => {
-                setMe({ ...me, active: false })
-                channel!.push('attack', {})
-              }}
-            />
-          ) : (
-            <></>
-          )}
-
-          {winner && winner === me!.user.id ? <H2>{t('youWin')}</H2> : <></>}
-
-          {winner && winner !== me!.user.id ? <H2>{t('youLoose')}</H2> : <></>}
-
-          <Spacing spacings="mb-2" />
-
-          {winner ? (
-            <Button
-              title={`${winner === me!.user.id ? '🏆' : '😞'} ${t('goHome')}`}
-              onPress={leave}
-            />
-          ) : (
-            <></>
-          )}
-          <Spacing spacings="mb-2" />
-        </View>
-        <View>
-          <View style={{ alignItems: 'center' }}>
-            <HealthBar
-              maxHealth={opponent.character.health}
-              currentHealth={opponent.health}
-            />
-
-            <Spacing spacings="mb-2" />
-
-            <CharacterOverview character={opponent.character} />
-          </View>
-        </View>
+        <CharacterFight isMe={false} status={opponent} winner={winner} />
       </View>
 
       {channel ? (

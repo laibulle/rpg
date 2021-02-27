@@ -2,9 +2,9 @@ import React, { useContext } from 'react'
 import { Image } from 'react-native'
 import { Characters_characters } from '../graphql/__generated__/Characters'
 
-import { Text, ThemeContext, View } from '../rickui'
+import { ThemeContext } from '../rickui'
 
-type Props = { character: Characters_characters }
+type Props = { character?: Characters_characters }
 
 const SKINS_COUNT = 13
 
@@ -46,7 +46,7 @@ const SkinSelector: React.FC<Props> = ({ character }) => {
   return (
     <Image
       resizeMode="contain"
-      source={getCharacterImage(character.skin)}
+      source={getCharacterImage(character?.skin || 1)}
       style={{ width: 300, height: 300 }}
     />
   )
