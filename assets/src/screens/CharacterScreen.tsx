@@ -1,7 +1,7 @@
 import { useNavigation, useRoute } from '@react-navigation/core'
 import React, { useContext, useEffect, useState } from 'react'
-
 import { StyleSheet } from 'react-native'
+import { useTranslation } from 'react-i18next'
 
 import {
   Spacing,
@@ -42,6 +42,7 @@ const CharacterScreen: React.FC<Props> = () => {
   const [theme] = useContext(ThemeContext)
   const navigation = useNavigation()
   navigation.setOptions({ headerShown: false })
+  const [t] = useTranslation()
 
   const route = useRoute()
 
@@ -176,7 +177,7 @@ const CharacterScreen: React.FC<Props> = () => {
         >
           <Button
             loading={loading}
-            title="Reset"
+            title={t('reset')}
             style={[styles.button, theme.styles.mb2]}
             onPress={() => {
               if (!loading) {
@@ -187,7 +188,7 @@ const CharacterScreen: React.FC<Props> = () => {
 
           <Button
             loading={loading}
-            title="Cancel"
+            title={t('cancel')}
             style={[styles.button, theme.styles.mb2]}
             onPress={() => {
               if (!loading) {
@@ -198,7 +199,7 @@ const CharacterScreen: React.FC<Props> = () => {
 
           <Button
             loading={loading}
-            title="Save"
+            title={t('save')}
             style={[styles.button, theme.styles.mb2]}
             onPress={() => {
               if (!loading) {

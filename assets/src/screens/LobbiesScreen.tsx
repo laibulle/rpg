@@ -1,10 +1,11 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useContext, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
+
 import CharacterOverview from '../components/CharacterOverview'
 import Layout from '../Layout'
 import { State } from '../reducers'
-
 import { Button, Spacing, TextInput, View, ThemeContext } from '../rickui'
 
 type Props = {}
@@ -12,6 +13,7 @@ type Props = {}
 const LobbiesScreen: React.FC<Props> = () => {
   const navigation = useNavigation()
   navigation.setOptions({ headerShown: false })
+  const [t] = useTranslation()
 
   const [lobby, setLobby] = useState('')
   const [theme] = useContext(ThemeContext)
@@ -20,16 +22,20 @@ const LobbiesScreen: React.FC<Props> = () => {
   return (
     <Layout>
       <View>
+        <Spacing spacings="mb-2" />
+
+        <CharacterOverview character={character} />
+
         <TextInput
           value={lobby}
           onChangeText={setLobby}
-          placeholder="Enter lobby name"
+          placeholder={t('lobby.placeholder')}
         />
 
         <Spacing spacings="mb-2" />
 
         <Button
-          title="Join lobby"
+          title={t('fight')}
           enabled={lobby.length > 3}
           onPress={() => {
             navigation.navigate('Lobby', { lobby })
@@ -39,13 +45,11 @@ const LobbiesScreen: React.FC<Props> = () => {
         <Spacing spacings="mb-2" />
 
         <Button
-          title="Go home"
+          title={t('goHome')}
           onPress={() => {
             navigation.navigate('Home')
           }}
         />
-
-        <CharacterOverview character={character} />
       </View>
     </Layout>
   )

@@ -9,7 +9,7 @@ import { apolloClient } from './src/graphql'
 import RootApp from './src/RootApp'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { storeState } from './src/actions'
-import Layout from './src/Layout'
+import './src/i18n'
 
 export default () => {
   const [fontsLoaded] = useFonts({

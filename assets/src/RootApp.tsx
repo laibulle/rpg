@@ -1,13 +1,15 @@
 import React from 'react'
-import LoginScreen from './screens/LoginScreen'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
+
+import LoginScreen from './screens/LoginScreen'
 import { State } from './reducers'
 import HomeScreen from './screens/HomeScreen'
 import CharacterScreen from './screens/CharacterScreen'
 import LobbiesScreen from './screens/LobbiesScreen'
 import LobbyScreen from './screens/LobbyScreen'
+import RegisterScreen from './screens/RegisterScreen'
 
 const Stack = createStackNavigator()
 
@@ -15,7 +17,7 @@ const RootApp = () => {
   const { auth } = useSelector((state: State) => state.auth)
 
   const linking = {
-    prefixes: ['https://mychat.com', 'mychat://'],
+    prefixes: ['https://rpg.io', 'rpgio://'],
     config: {
       screens: {
         Home: '',
@@ -43,7 +45,7 @@ const RootApp = () => {
         ) : (
           <>
             <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Register" component={LoginScreen} />
+            <Stack.Screen name="Register" component={RegisterScreen} />
           </>
         )}
       </Stack.Navigator>

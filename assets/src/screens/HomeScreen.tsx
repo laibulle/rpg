@@ -15,6 +15,7 @@ import { State } from '../reducers'
 import { getCharacterImage } from '../components/SkinSelector'
 import { storeSelectedCharacter } from '../actions'
 import Layout from '../Layout'
+import { useTranslation } from 'react-i18next'
 
 type Props = {}
 
@@ -40,6 +41,7 @@ const LoginScreen: React.FC<Props> = () => {
   const [theme] = useContext(ThemeContext)
 
   const dispatch = useDispatch()
+  const [t] = useTranslation()
 
   const auth = useSelector((state: State) => state.auth.auth)
   const selectedCharacter = useSelector(
@@ -96,7 +98,7 @@ const LoginScreen: React.FC<Props> = () => {
             }}
           >
             <Button
-              title={`${isCharacterKo(selectedCharacter) ? 'KO' : 'Play'}`}
+              title={`${isCharacterKo(selectedCharacter) ? 'KO' : t('play')}`}
               style={[
                 styles.button,
                 theme.styles.mb2,
@@ -110,7 +112,7 @@ const LoginScreen: React.FC<Props> = () => {
             />
 
             <Button
-              title="Edit"
+              title={t('edit')}
               style={[styles.button, theme.styles.mb2]}
               onPress={() => {
                 navigation.navigate('EditCharacter', {
@@ -121,7 +123,7 @@ const LoginScreen: React.FC<Props> = () => {
 
             <Button
               enabled={data!.characters!.length < 10}
-              title="New character"
+              title={t('newCharacter')}
               style={[styles.button, theme.styles.mb2]}
               onPress={() => {
                 navigation.navigate('NewCharacter')

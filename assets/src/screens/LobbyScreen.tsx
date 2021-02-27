@@ -1,12 +1,13 @@
 import { useNavigation, useRoute } from '@react-navigation/core'
 import React, { useContext, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { Channel } from 'phoenix'
+import { useTranslation } from 'react-i18next'
 
 import CharacterOverview from '../components/CharacterOverview'
 import { SocketContext } from '../providers/SockerProvider'
 import { State } from '../reducers'
-import { Button, Text, ThemeContext, View } from '../rickui'
-import { Channel } from 'phoenix'
+import { Button, H2, Spacing, Text, ThemeContext, View } from '../rickui'
 import HealthBar from '../components/HealthBar'
 import { Characters_characters } from '../graphql/__generated__/Characters'
 import Layout from '../Layout'
@@ -33,6 +34,7 @@ const LobbyScreen: React.FC<Props> = () => {
   const route = useRoute()
   const navigation = useNavigation()
   navigation.setOptions({ headerShown: false })
+  const [t] = useTranslation()
 
   const socket = useContext(SocketContext)
   const { character, token, currentUser } = useSelector((state: State) => ({
@@ -125,16 +127,25 @@ const LobbyScreen: React.FC<Props> = () => {
 
   return (
     <Layout hideTitle={true} image={arenas[arena]}>
-      <View style={[theme.styles.flexRow, {}]}>
+      <View
+        style={[
+          theme.styles.flexRow,
+          { flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' },
+        ]}
+      >
         <View style={{ alignItems: 'center' }}>
           <HealthBar
             currentHealth={me?.health || character.health}
             maxHealth={character.health}
           />
+          <Spacing spacings="mb-2" />
+
           <CharacterOverview character={character} />
+          <Spacing spacings="mb-2" />
+
           {me && me.active && !winner ? (
             <Button
-              title="Attack"
+              title={t('attack')}
               onPress={() => {
                 setMe({ ...me, active: false })
                 channel!.push('attack', {})
@@ -144,24 +155,33 @@ const LobbyScreen: React.FC<Props> = () => {
             <></>
           )}
 
-          {winner && winner === me!.user.id ? <Text>Winner</Text> : <></>}
+          {winner && winner === me!.user.id ? <H2>{t('youWin')}</H2> : <></>}
 
-          {winner && winner !== me!.user.id ? <Text>Looser</Text> : <></>}
+          {winner && winner !== me!.user.id ? <H2>{t('youLoose')}</H2> : <></>}
 
-          {winner ? <Button title="Back to home" onPress={leave} /> : <></>}
+          <Spacing spacings="mb-2" />
+
+          {winner ? (
+            <Button
+              title={`${winner === me!.user.id ? '🏆' : '😞'} ${t('goHome')}`}
+              onPress={leave}
+            />
+          ) : (
+            <></>
+          )}
+          <Spacing spacings="mb-2" />
         </View>
         <View>
-          {opponent ? (
-            <View style={{ alignItems: 'center' }}>
-              <HealthBar
-                maxHealth={opponent.character.health}
-                currentHealth={opponent.health}
-              />
-              <CharacterOverview character={opponent.character} />
-            </View>
-          ) : (
-            <Text>Waiting for opponent</Text>
-          )}
+          <View style={{ alignItems: 'center' }}>
+            <HealthBar
+              maxHealth={opponent.character.health}
+              currentHealth={opponent.health}
+            />
+
+            <Spacing spacings="mb-2" />
+
+            <CharacterOverview character={opponent.character} />
+          </View>
         </View>
       </View>
     </Layout>

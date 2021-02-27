@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { Text, View, Center, FormRow, Form, Link } from '../rickui'
 import { Login } from '../graphql/__generated__/Login'
-import { useMutation } from '@apollo/client'
+import { ApolloError, useMutation } from '@apollo/client'
 import { LOGIN } from '../graphql/mutations'
 import { isDev } from './../helpers'
 import { useDispatch } from 'react-redux'
@@ -33,8 +33,13 @@ const LoginScreen: React.FC<Props> = () => {
     }
   }
 
+  const handleError = async (error: ApolloError) => {
+    setError(error.message)
+  }
+
   const [login, { loading }] = useMutation<Login>(LOGIN, {
     onCompleted: handleCompleted,
+    onError: handleError,
   })
 
   const [form, setForm] = useState<FormDescription>({
@@ -50,8 +55,8 @@ const LoginScreen: React.FC<Props> = () => {
       },
       {
         field: 'password',
-        label: t('email.password'),
-        placeholder: t('email.password'),
+        label: t('password.label'),
+        placeholder: t('password.placeholder'),
         inputType: 'Password',
         validation: PASSWORD_REGEX,
         validationMessage: 'Invalid password',
@@ -97,7 +102,12 @@ const LoginScreen: React.FC<Props> = () => {
         />
 
         <FormRow>
-          <Link to="/signup" navigate={(to) => {}}>
+          <Link
+            to="/signup"
+            navigate={() => {
+              navigation.navigate('Register')
+            }}
+          >
             <Text>{t('noAccount')}</Text>
           </Link>
         </FormRow>
