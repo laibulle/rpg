@@ -15,6 +15,7 @@ import Waiting from '../components/Waiting'
 import LobbyChat from '../components/Chat/LobbyChat'
 import { resetMessages, storeMessage } from '../actions'
 import CharacterFight, { Characterstatus } from '../components/CharacterFight'
+import Damages from '../components/Damages'
 
 type Props = {}
 
@@ -58,6 +59,7 @@ const LobbyScreen: React.FC<Props> = () => {
   const { lobby }: { lobby: string } = route.params! as any
   const [theme] = useContext(ThemeContext)
   const [channel, setChannel] = useState<Channel | undefined>()
+  const [damages, setDamages] = useState<string | undefined>()
 
   const sendMessage = async (message: ChatMessage) => {
     channel!.push(NEW_MESSAGE, message)
@@ -104,7 +106,7 @@ const LobbyScreen: React.FC<Props> = () => {
         })
 
         channel.on('damages', ({ defenderId, damages }) => {
-          console.log(damages)
+          setDamages(damages === 0 ? 'Failed' : damages)
         })
 
         channel.on('user_left', () => {
@@ -148,6 +150,7 @@ const LobbyScreen: React.FC<Props> = () => {
           { flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' },
         ]}
       >
+        <Damages value={damages ? `${damages}` : undefined} />
         <CharacterFight
           isMe={true}
           status={me}

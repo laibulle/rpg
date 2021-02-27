@@ -13,6 +13,7 @@ import './src/i18n'
 
 export default () => {
   const [fontsLoaded] = useFonts({
+    creepster: require('./assets/fonts/Creepster-Regular.ttf'),
     poppins: require('./assets/fonts/Poppins/Poppins-Regular.ttf'),
     nunito: require('./assets/fonts/Nunito/Nunito-Regular.ttf'),
   })
