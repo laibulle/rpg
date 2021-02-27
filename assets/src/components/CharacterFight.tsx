@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import { Characters_characters } from '../graphql/__generated__/Characters'
 import { Button, H2, Spacing, View } from '../rickui'
+import BouncingButton from './BouncingButton'
 import CharacterOverview from './CharacterOverview'
 import HealthBar from './HealthBar'
 
@@ -29,6 +30,7 @@ const CharacterFight: React.FC<Props> = ({
   isMe,
 }) => {
   const [t] = useTranslation()
+
   return (
     <View style={{ alignItems: 'center' }}>
       <HealthBar
@@ -42,16 +44,13 @@ const CharacterFight: React.FC<Props> = ({
 
       {isMe ? (
         <>
-          {status && status.active && !winner ? (
-            <Button
-              title={t('attack')}
-              onPress={() => {
-                if (onAttack) onAttack()
-              }}
-            />
-          ) : (
-            <></>
-          )}
+          <BouncingButton
+            display={status?.active || false}
+            title={t('attack')}
+            onPress={() => {
+              if (onAttack) onAttack()
+            }}
+          />
 
           {winner && winner === status!.user.id ? (
             <H2>{t('youWin')}</H2>
