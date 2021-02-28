@@ -29,7 +29,7 @@ const LoginScreen: React.FC<Props> = () => {
   const handleCompleted = async (data: Login) => {
     if (data.auth?.accessToken != null) {
       dispatch(storeAuth(data.auth!))
-      navigation.navigate('Home')
+      navigation.navigate('Home', { token: Date.now() })
     }
   }
 

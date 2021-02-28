@@ -1,21 +1,18 @@
-import React, { useContext, useEffect } from 'react'
-import { useNavigation } from '@react-navigation/native'
-import moment from 'moment'
+import React, { useContext, useEffect, useState } from 'react'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
-import { Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { useQuery } from '@apollo/react-hooks'
+import { useTranslation } from 'react-i18next'
 
 import { CHARACTERS } from '../graphql/queries'
 import { View, Text, Button, ThemeContext } from '../rickui'
-import {
-  Characters,
-  Characters_characters,
-} from '../graphql/__generated__/Characters'
+import { Characters } from '../graphql/__generated__/Characters'
 import { State } from '../reducers'
-import { getCharacterImage } from '../components/SkinSelector'
 import { storeSelectedCharacter } from '../actions'
 import Layout from '../Layout'
-import { useTranslation } from 'react-i18next'
+import CharacterHome, { isCharacterKo } from '../components/CharacterHome'
+import moment from 'moment'
 
 type Props = {}
 
@@ -29,16 +26,12 @@ const styles = StyleSheet.create({
   button: { width: 200 },
 })
 
-const isCharacterKo = (character: Characters_characters) => {
-  return character.reanimateAt == null
-    ? false
-    : moment().isBefore(character.reanimateAt)
-}
-
 const LoginScreen: React.FC<Props> = () => {
   const navigation = useNavigation()
   navigation.setOptions({ headerShown: false })
   const [theme] = useContext(ThemeContext)
+  const route = useRoute()
+  const [timeRemaining, setTimeRemaining] = useState('')
 
   const dispatch = useDispatch()
   const [t] = useTranslation()
@@ -48,10 +41,15 @@ const LoginScreen: React.FC<Props> = () => {
     (state: State) => state.game.selectedCharacter
   )
 
-  const { data, loading } = useQuery<Characters>(CHARACTERS, {
-    fetchPolicy: 'no-cache',
+  const { data, loading, refetch } = useQuery<Characters>(CHARACTERS, {
+    fetchPolicy: 'network-only',
     variables: { user_id: auth?.user.id },
   })
+
+  useEffect(() => {
+    console.log('appear')
+    refetch()
+  }, [route.params])
 
   useEffect(() => {
     if (data && data.characters && data.characters.length > 0) {
@@ -59,35 +57,31 @@ const LoginScreen: React.FC<Props> = () => {
     }
   }, [data])
 
+  useEffect(() => {
+    if (selectedCharacter && isCharacterKo(selectedCharacter)) {
+      setInterval(() => {
+        const diff = moment.duration(
+          moment(selectedCharacter.reanimateAt).diff(moment())
+        )
+        setTimeRemaining(
+          diff.minutes() +
+            ':' +
+            (diff.seconds() < 10 ? '0' : '') +
+            diff.seconds()
+        )
+      }, 1000)
+    }
+  }, [selectedCharacter])
+
   if (loading) return <Text>Loading...</Text>
 
   return (
     <Layout>
       <View>
         <View style={[styles.charactersContainers, theme.styles.mb2]}>
-          {data!.characters!.map((x) => {
-            const ko = isCharacterKo(x)
-
-            return (
-              <TouchableOpacity
-                style={{
-                  opacity: ko ? theme.styles.disabled : theme.styles.enabled,
-                }}
-                key={`character-${x.id}`}
-                onPress={() => dispatch(storeSelectedCharacter(x))}
-              >
-                <Image
-                  resizeMode="contain"
-                  source={getCharacterImage(x.skin)}
-                  style={
-                    selectedCharacter?.id === x.id
-                      ? { width: 300, height: 300 }
-                      : { width: 100, height: 100 }
-                  }
-                />
-              </TouchableOpacity>
-            )
-          })}
+          {data!.characters!.map((x) => (
+            <CharacterHome key={`character-${x.id}`} character={x} />
+          ))}
         </View>
 
         {selectedCharacter ? (
@@ -98,7 +92,9 @@ const LoginScreen: React.FC<Props> = () => {
             }}
           >
             <Button
-              title={`${isCharacterKo(selectedCharacter) ? 'KO' : t('play')}`}
+              title={`${
+                isCharacterKo(selectedCharacter) ? timeRemaining : t('play')
+              }`}
               style={[
                 styles.button,
                 theme.styles.mb2,

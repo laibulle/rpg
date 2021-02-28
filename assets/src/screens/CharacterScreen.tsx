@@ -61,7 +61,7 @@ const CharacterScreen: React.FC<Props> = () => {
   }
 
   const onCompletedUpsert = (data: UpsertCharacter) => {
-    navigation.navigate('Home')
+    navigation.navigate('Home', { token: Date.now() })
   }
 
   const [fetchCharacter] = useLazyQuery<Character>(CHARACTER, {
@@ -192,7 +192,7 @@ const CharacterScreen: React.FC<Props> = () => {
             style={[styles.button, theme.styles.mb2]}
             onPress={() => {
               if (!loading) {
-                navigation.navigate('Home')
+                navigation.navigate('Home', { token: Date.now() })
               }
             }}
           />

@@ -47,7 +47,7 @@ const LobbiesScreen: React.FC<Props> = () => {
         <Button
           title={t('goHome')}
           onPress={() => {
-            navigation.navigate('Home')
+            navigation.navigate('Home', { token: Date.now() })
           }}
         />
       </View>

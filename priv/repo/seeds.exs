@@ -8,7 +8,7 @@ data = File.read!(Path.join(:code.priv_dir(:rpg), "data.json")) |> Jason.decode!
 defmodule FHelper do
   def ko(v) do
     case v do
-      true -> DateTime.utc_now()
+      true -> DateTime.utc_now() |> DateTime.add(3600, :second)
       false -> nil
     end
   end

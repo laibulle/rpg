@@ -207,7 +207,7 @@ const LobbyScreen: React.FC<Props> = () => {
   const leave = () => {
     fightSound?.stopAsync()
     channel?.leave()
-    navigation.navigate('Home')
+    navigation.navigate('Home', { token: Date.now() })
   }
 
   if (!opponent) return <Waiting lobby={lobby} />
