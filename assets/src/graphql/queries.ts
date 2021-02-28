@@ -29,7 +29,7 @@ export const CHARACTER = gql`
       skin
       fights {
         id
-        createdAt
+        insertedAt
         characters {
           winner
           characterId

@@ -222,9 +222,20 @@ const CharacterScreen: React.FC<Props> = () => {
             }}
           />
         </View>
-        {initialCharacter.fights.map((i) => {
-          return <Text key={`fight-${i?.id}`}>mimiom</Text>
-        })}
+        <Spacing spacings={['mt-2', 'mb-2']}>
+          {initialCharacter.fights.map((i) => {
+            return (
+              <Text key={`fight-${i?.id}`}>
+                {i?.insertedAt}{' '}
+                {i?.characters?.find(
+                  (x) => x.characterId == initialCharacter.id
+                )?.winner
+                  ? t('youWin')
+                  : t('youLoose')}
+              </Text>
+            )
+          })}
+        </Spacing>
       </View>
     </Layout>
   )

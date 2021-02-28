@@ -16,7 +16,7 @@ export interface Character_character_fights_characters {
 export interface Character_character_fights {
   __typename: "Fight";
   id: string;
-  createdAt: any;
+  insertedAt: any;
   characters: Character_character_fights_characters[] | null;
 }
 

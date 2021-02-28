@@ -22,7 +22,7 @@ defmodule Rpg.Game.GameSchema do
 
   object :fight do
     field(:id, non_null(:id))
-    field(:created_at, non_null(:datetime))
+    field(:inserted_at, non_null(:string))
     field(:characters, list_of(non_null(:fight_character)))
   end
 
