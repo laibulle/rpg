@@ -205,6 +205,7 @@ const LobbyScreen: React.FC<Props> = () => {
   }
 
   const leave = () => {
+    fightSound?.stopAsync()
     channel?.leave()
     navigation.navigate('Home')
   }
