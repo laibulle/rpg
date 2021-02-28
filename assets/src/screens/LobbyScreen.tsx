@@ -71,7 +71,6 @@ const LobbyScreen: React.FC<Props> = () => {
 
   useEffect(() => {
     return () => {
-      console.log('unload sounds-----------')
       failSound?.unloadAsync()
       damageSound?.unloadAsync()
       looseSound?.unloadAsync()
@@ -130,10 +129,7 @@ const LobbyScreen: React.FC<Props> = () => {
   const playback = () => {
     if (fightSound) {
       fightSound.setIsLoopingAsync(true)
-      fightSound.playAsync().then((value) => {
-        //console.log(value)
-        /*playback()*/
-      })
+      fightSound.playAsync().then((value) => {})
     }
   }
 
@@ -200,11 +196,10 @@ const LobbyScreen: React.FC<Props> = () => {
         })
       })
       .receive('error', (resp) => {
-        console.log('Unable to join', resp)
+        console.error('Unable to join', resp)
       })
 
     return () => {
-      console.log('cleaning lobby screen')
       channel.leave()
     }
   }
