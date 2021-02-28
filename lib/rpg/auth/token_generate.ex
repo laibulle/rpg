@@ -1,5 +1,8 @@
 defmodule Rpg.Auth.TokenGenerate do
-  @ttl {36500, :day}
+  @moduledoc """
+  TokenGenrate module
+  """
+  @ttl {36_500, :day}
 
   alias Rpg.Auth.User
 

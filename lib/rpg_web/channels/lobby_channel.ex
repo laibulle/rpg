@@ -58,11 +58,9 @@ defmodule RpgWeb.RoomChannel do
   def handle_info({:after_join, state}, socket) do
     lobby = socket.assigns.lobby
 
-    if(
-      Presence.list(socket) |> Enum.count() == 0 ||
-        (Presence.list(socket) |> Enum.count() == 1 &&
-           Map.has_key?(Presence.list(socket), socket.assigns.user_id))
-    ) do
+    if Presence.list(socket) |> Enum.count() == 0 ||
+         (Presence.list(socket) |> Enum.count() == 1 &&
+            Map.has_key?(Presence.list(socket), socket.assigns.user_id)) do
       GameMonitor.initialize(lobby)
     end
 

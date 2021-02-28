@@ -30,7 +30,7 @@ defmodule Rpg.Game.AutoFight do
   end
 
   defp null_rounds_count(damages, null_rounds) do
-    if(damages > 0) do
+    if damages > 0 do
       @max_null_rounds
     else
       null_rounds - 1
