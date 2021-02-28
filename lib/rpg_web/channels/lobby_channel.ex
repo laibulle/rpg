@@ -10,6 +10,7 @@ defmodule RpgWeb.RoomChannel do
   alias Rpg.Game.{GameMonitor, Character}
   alias Rpg.Game.FightRules
   alias RpgWeb.Presence
+  alias Rpg.Game.AutoFight
 
   defp serialize_user(%User{} = user) do
     %{id: user.id, name: user.name}
@@ -145,8 +146,7 @@ defmodule RpgWeb.RoomChannel do
     )
 
     if defender.health <= 0 do
-      Game.update_character_win(attacker.character.id)
-      Game.update_character_loose(defender.character.id)
+      AutoFight.handle_fight_end(attacker.character, defender.character)
 
       GameMonitor.update_status(socket.assigns.lobby, :finished)
       broadcast!(socket, Atom.to_string(:finished), %{winner: attacker.user.id})
