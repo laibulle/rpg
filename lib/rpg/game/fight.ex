@@ -6,10 +6,11 @@ defmodule Rpg.Game.Fight do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Rpg.Game.Fight
+  alias Rpg.Game.{Fight, FightCharacter}
 
   schema "fights" do
     timestamps()
+    has_many(:characters, FightCharacter)
   end
 
   @required []

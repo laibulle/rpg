@@ -13,7 +13,7 @@ defmodule Rpg.Game.GameResolver do
   end
 
   def character(_parent, %{id: id}, _resolution) do
-    {:ok, Rpg.Game.get_character!(id)}
+    {:ok, Map.merge(Rpg.Game.get_character!(id), %{fights: Game.list_character_fights(id)})}
   end
 
   def fight(_parent, %{character_id: character_id}, _resolution) do

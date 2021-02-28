@@ -32,6 +32,7 @@ const LoginScreen: React.FC<Props> = () => {
   const [theme] = useContext(ThemeContext)
   const route = useRoute()
   const [timeRemaining, setTimeRemaining] = useState('')
+  const [interval, storeInterval] = useState(setInterval(() => {}, 1000))
 
   const dispatch = useDispatch()
   const [t] = useTranslation()
@@ -59,17 +60,20 @@ const LoginScreen: React.FC<Props> = () => {
 
   useEffect(() => {
     if (selectedCharacter && isCharacterKo(selectedCharacter)) {
-      setInterval(() => {
-        const diff = moment.duration(
-          moment(selectedCharacter.reanimateAt).diff(moment())
-        )
-        setTimeRemaining(
-          diff.minutes() +
-            ':' +
-            (diff.seconds() < 10 ? '0' : '') +
-            diff.seconds()
-        )
-      }, 1000)
+      clearInterval(interval)
+      storeInterval(
+        setInterval(() => {
+          const diff = moment.duration(
+            moment(selectedCharacter.reanimateAt).diff(moment())
+          )
+          setTimeRemaining(
+            diff.minutes() +
+              ':' +
+              (diff.seconds() < 10 ? '0' : '') +
+              diff.seconds()
+          )
+        }, 1000)
+      )
     }
   }, [selectedCharacter])
 

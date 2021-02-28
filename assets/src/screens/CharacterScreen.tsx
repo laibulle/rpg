@@ -11,12 +11,16 @@ import {
   Center,
   Bold,
   H2,
+  Text,
 } from '../rickui'
 import SkillInput from '../components/SkillInput'
 import SkinSelector from '../components/SkinSelector'
 import Layout from '../Layout'
 import { useLazyQuery, useMutation } from '@apollo/client'
-import { Character } from '../graphql/__generated__/Character'
+import {
+  Character,
+  Character_character,
+} from '../graphql/__generated__/Character'
 import { CHARACTER } from '../graphql/queries'
 import { UpsertCharacter } from '../graphql/__generated__/UpsertCharacter'
 import { UPSERT_CHARACTER } from '../graphql/mutations'
@@ -46,14 +50,17 @@ const CharacterScreen: React.FC<Props> = () => {
 
   const route = useRoute()
 
-  const [initialCharacter, setInitialCharacter] = useState<CharacterForm>({
-    skin: 1,
-    magik: 0,
-    health: 0,
-    attack: 0,
-    defense: 0,
-    skillPoints: 12,
-  })
+  const [initialCharacter, setInitialCharacter] = useState<Character_character>(
+    {
+      skin: 1,
+      magik: 0,
+      health: 0,
+      attack: 0,
+      defense: 0,
+      skillPoints: 12,
+      fights: [],
+    } as any
+  )
 
   const onCompletedFetch = (data: Character) => {
     setInitialCharacter({ ...(data.character! as any) })
@@ -215,6 +222,9 @@ const CharacterScreen: React.FC<Props> = () => {
             }}
           />
         </View>
+        {initialCharacter.fights.map((i) => {
+          return <Text key={`fight-${i?.id}`}>mimiom</Text>
+        })}
       </View>
     </Layout>
   )

@@ -7,6 +7,19 @@
 // GraphQL query operation: Character
 // ====================================================
 
+export interface Character_character_fights_characters {
+  __typename: "FightCharacter";
+  winner: boolean;
+  characterId: string;
+}
+
+export interface Character_character_fights {
+  __typename: "Fight";
+  id: string;
+  createdAt: any;
+  characters: Character_character_fights_characters[] | null;
+}
+
 export interface Character_character {
   __typename: "Character";
   id: string;
@@ -17,6 +30,7 @@ export interface Character_character {
   health: number;
   rank: number;
   skin: number;
+  fights: (Character_character_fights | null)[];
 }
 
 export interface Character {

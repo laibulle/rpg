@@ -51,6 +51,25 @@ defmodule Rpg.Game do
   end
 
   @doc """
+  Gets user's characters.
+  ## Examples
+      iex> list_character_fights(123)
+      [%Fight{}]
+      iex> list_character_fights(456)
+      []
+  """
+  def list_character_fights(character_id),
+    do:
+      Repo.all(
+        from(f in Fight,
+          inner_join: fc in FightCharacter,
+          on: f.id == fc.fight_id,
+          where: fc.character_id == ^character_id
+        )
+      )
+      |> Repo.preload(:characters)
+
+  @doc """
   Creates fight_character.
   ## Examples
       iex> create_fight_character(%{field: value})

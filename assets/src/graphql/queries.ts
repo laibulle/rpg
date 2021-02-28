@@ -27,6 +27,14 @@ export const CHARACTER = gql`
       health
       rank
       skin
+      fights {
+        id
+        createdAt
+        characters {
+          winner
+          characterId
+        }
+      }
     }
   }
 `

@@ -15,6 +15,17 @@ defmodule Rpg.Game.GameSchema do
     field(:magik, non_null(:integer))
   end
 
+  object :fight_character do
+    field(:winner, non_null(:boolean))
+    field(:character_id, non_null(:id))
+  end
+
+  object :fight do
+    field(:id, non_null(:id))
+    field(:created_at, non_null(:datetime))
+    field(:characters, list_of(non_null(:fight_character)))
+  end
+
   object :fight_report do
     field(:winner, :id)
     field(:rounds, non_null(list_of(non_null(:round))))
@@ -36,6 +47,7 @@ defmodule Rpg.Game.GameSchema do
     field(:defense, non_null(:integer))
     field(:magik, non_null(:integer))
     field(:reanimate_at, :datetime)
+    field(:fights, non_null(list_of(:fight)))
   end
 
   object :game_queries do
