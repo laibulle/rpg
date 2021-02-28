@@ -5,7 +5,7 @@ defmodule Rpg.Game do
 
   import Ecto.Query, warn: false
   alias Rpg.Repo
-  alias Rpg.Game.Character
+  alias Rpg.Game.{Character, Fight, FightCharacter}
 
   @doc """
   Gets user's characters.
@@ -35,6 +35,34 @@ defmodule Rpg.Game do
               (c.reanimate_at <= ^now or (is_nil(c.reanimate_at) and not (c.id in ^excludes)))
         )
       )
+
+  @doc """
+  Creates fight.
+  ## Examples
+      iex> create_fight(%{field: value})
+      {:ok, %Fight{}}
+      iex> create_fight(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+  """
+  def create_fight(attrs \\ %{}) do
+    %Fight{}
+    |> Fight.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Creates fight_character.
+  ## Examples
+      iex> create_fight_character(%{field: value})
+      {:ok, %FightCharacter{}}
+      iex> create_fight_character(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+  """
+  def create_fight_character(attrs \\ %{}) do
+    %FightCharacter{}
+    |> FightCharacter.changeset(attrs)
+    |> Repo.insert()
+  end
 
   @doc """
   Gets a single character.

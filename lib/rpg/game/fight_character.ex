@@ -8,7 +8,7 @@ defmodule Rpg.Game.FightCharacter do
 
   alias Rpg.Game.{Fight, Character, FightCharacter}
 
-  schema "fight_characters" do
+  schema "fights_characters" do
     field(:winner, :boolean)
     belongs_to(:character, Character)
     belongs_to(:fight, Fight)
@@ -16,7 +16,7 @@ defmodule Rpg.Game.FightCharacter do
     timestamps()
   end
 
-  @required [:character_id, :fight_id, :winnner]
+  @required [:character_id, :fight_id, :winner]
 
   @optional []
 

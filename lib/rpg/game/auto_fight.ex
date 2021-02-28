@@ -4,8 +4,7 @@ defmodule Rpg.Game.AutoFight do
   """
 
   alias Rpg.Game
-  alias Rpg.Game.Character
-  alias Rpg.Game.FightRules
+  alias Rpg.Game.{Character, FightRules}
 
   @max_null_rounds 50
 
@@ -41,5 +40,12 @@ defmodule Rpg.Game.AutoFight do
   def handle_fight_end(%Character{} = winner, %Character{} = looser) do
     Game.update_character_win(winner.id)
     Game.update_character_loose(looser.id)
+    {:ok, fight} = Game.create_fight(%{})
+
+    {:ok, _} =
+      Game.create_fight_character(%{character_id: winner.id, winner: true, fight_id: fight.id})
+
+    {:ok, _} =
+      Game.create_fight_character(%{character_id: looser.id, winner: false, fight_id: fight.id})
   end
 end

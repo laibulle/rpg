@@ -24,8 +24,9 @@ defmodule Rpg.Repo.Migrations.Rpg do
     end
 
     create table(:fights_characters) do
-      add(:character, references(:characters, on_delete: :nothing), null: false)
-      add(:fight, references(:fights, on_delete: :nothing), null: false)
+      add(:character_id, references(:characters, on_delete: :nothing), null: false)
+      add(:fight_id, references(:fights, on_delete: :nothing), null: false)
+      add(:winner, :boolean, null: false)
       timestamps()
     end
   end
