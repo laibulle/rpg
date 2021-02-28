@@ -104,7 +104,6 @@ const CharacterScreen: React.FC<Props> = () => {
     if (characterId) {
       fetchCharacter({ variables: { id: characterId } })
     }
-    console.log(characterId)
   }, [route])
 
   return (
