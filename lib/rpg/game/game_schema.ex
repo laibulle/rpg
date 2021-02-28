@@ -15,6 +15,17 @@ defmodule Rpg.Game.GameSchema do
     field(:magik, non_null(:integer))
   end
 
+  object :fight_report do
+    field(:winner, :id)
+    field(:rounds, non_null(list_of(non_null(:round))))
+  end
+
+  object :round do
+    field(:damages, non_null(:integer))
+    field(:attacker, non_null(:id))
+    field(:dice_value, non_null(:integer))
+  end
+
   object :character do
     field(:id, non_null(:id))
     field(:skill_points, non_null(:integer))
@@ -49,6 +60,13 @@ defmodule Rpg.Game.GameSchema do
       arg(:input, non_null(:character_input))
 
       resolve(&GameResolver.upsert_character/3)
+    end
+
+    @desc "Upsert character"
+    field :fight, :fight_report do
+      arg(:character_id, non_null(:id))
+
+      resolve(&GameResolver.fight/3)
     end
   end
 end

@@ -4,7 +4,7 @@ defmodule Rpg.Game.GameResolver do
   """
 
   alias Rpg.Game
-  alias Rpg.Game.Character
+  alias Rpg.Game.{Character, AutoFight, Matchmaking}
   alias Rpg.Graphql.ErrorHelper
   import Canada, only: [can?: 2]
 
@@ -14,6 +14,17 @@ defmodule Rpg.Game.GameResolver do
 
   def character(_parent, %{id: id}, _resolution) do
     {:ok, Rpg.Game.get_character!(id)}
+  end
+
+  def fight(_parent, %{character_id: character_id}, _resolution) do
+    character = Game.get_character!(character_id)
+    {:ok, opponent} = Matchmaking.get_opponent(character)
+
+    AutoFight.fight(
+      %{character: character, health: character.health},
+      %{character: opponent, health: opponent.health}
+    )
+    |> ErrorHelper.format()
   end
 
   def upsert_character(_parent, %{input: input}, %{
