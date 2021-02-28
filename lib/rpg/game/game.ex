@@ -19,6 +19,24 @@ defmodule Rpg.Game do
     do: Repo.all(from(c in Character, where: c.user_id == ^user_id))
 
   @doc """
+  Gets user's characters that are not KO.
+  ## Examples
+      iex> get_ok_user_characters(123)
+      [%Character{}]
+      iex> get_ok_user_characters(456)
+      []
+  """
+  def get_ok_user_characters_execpted(user_id, now, excludes),
+    do:
+      Repo.all(
+        from(c in Character,
+          where:
+            c.user_id == ^user_id and
+              (c.reanimate_at <= ^now or (is_nil(c.reanimate_at) and not (c.id in ^excludes)))
+        )
+      )
+
+  @doc """
   Gets a single character.
   Raises `Ecto.NoResultsError` if the User does not exist.
   ## Examples

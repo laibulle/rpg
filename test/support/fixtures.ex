@@ -19,19 +19,24 @@ defmodule Rpg.Fixtures do
     user
   end
 
-  def character_fixture(user_id) do
+  def character_fixture(user_id, data \\ %{}) do
     {:ok, character} =
       %Character{}
-      |> Character.changeset(%{
-        "skin" => 1,
-        "rank" => 1,
-        "health" => 2,
-        "attack" => 4,
-        "magik" => 3,
-        "defense" => 3,
-        "skill_points" => 0,
-        "user_id" => user_id
-      })
+      |> Character.changeset(
+        Map.merge(
+          %{
+            "skin" => 1,
+            "rank" => 1,
+            "health" => 2,
+            "attack" => 4,
+            "magik" => 3,
+            "defense" => 3,
+            "skill_points" => 0,
+            "user_id" => user_id
+          },
+          data
+        )
+      )
       |> Repo.insert()
 
     character
