@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   Text,
   ButtonProps,
@@ -7,9 +7,13 @@ import {
   ViewStyle,
   StyleSheet,
 } from 'react-native'
+
+import { Audio } from 'expo-av'
+
 import { getSuitableTextColorStyle } from '../helpers'
 
 import { ThemeContext } from '../theme'
+import { Sound } from 'expo-av/build/Audio'
 
 type Props = {
   enabled?: boolean
@@ -25,7 +29,27 @@ const styles = StyleSheet.create({
   },
 })
 const CustomButton: React.FC<Props> = (props) => {
+  const [sound, setSound] = useState<Sound | undefined>()
   const [theme] = React.useContext(ThemeContext)
+
+  useEffect(() => {
+    const process = async () => {
+      console.log('Loading Sound')
+      const { sound } = await Audio.Sound.createAsync(
+        require('./../../../assets/sounds/click.mp3')
+      )
+      setSound(sound)
+    }
+
+    process()
+
+    return sound
+      ? () => {
+          console.log('Unloading Sound')
+          sound.unloadAsync()
+        }
+      : undefined
+  }, [])
 
   const isClickable = () => props.enabled !== false && props.loading !== true
 
@@ -58,6 +82,7 @@ const CustomButton: React.FC<Props> = (props) => {
       accessibilityComponentType="button"
       onPress={(e) => {
         if (isClickable()) {
+          sound!.playAsync()
           props.onPress(e)
         }
       }}

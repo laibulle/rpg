@@ -1,6 +1,8 @@
+import { Sound } from 'expo-av/build/Audio'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Animated, Easing } from 'react-native'
+import { Audio } from 'expo-av'
 
 import { Characters_characters } from '../graphql/__generated__/Characters'
 import { Button, H2, Spacing, View } from '../rickui'
