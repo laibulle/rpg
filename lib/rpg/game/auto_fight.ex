@@ -37,7 +37,7 @@ defmodule Rpg.Game.AutoFight do
     end
   end
 
-  def handle_fight_end(%Character{} = winner, %Character{} = looser) do
+  def handle_fight_end(winner, looser) do
     Game.update_character_win(winner.id)
     Game.update_character_loose(looser.id)
     {:ok, fight} = Game.create_fight(%{})
