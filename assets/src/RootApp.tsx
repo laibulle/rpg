@@ -10,6 +10,7 @@ import CharacterScreen from './screens/CharacterScreen'
 import LobbiesScreen from './screens/LobbiesScreen'
 import LobbyScreen from './screens/LobbyScreen'
 import RegisterScreen from './screens/RegisterScreen'
+import AutoLobbyScreen from './screens/AutoLobbyScreen'
 
 const Stack = createStackNavigator()
 
@@ -21,6 +22,7 @@ const RootApp = () => {
     config: {
       screens: {
         Home: '',
+        AutoLobby: 'autolobby',
         NewCharacter: 'character/new',
         EditCharacter: 'character/:id',
         Lobby: 'lobby/:lobby',
@@ -37,6 +39,7 @@ const RootApp = () => {
         {auth && auth.user ? (
           <>
             <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="AutoLobby" component={AutoLobbyScreen} />
             <Stack.Screen name="Lobby" component={LobbyScreen} />
             <Stack.Screen name="Lobbies" component={LobbiesScreen} />
             <Stack.Screen name="NewCharacter" component={CharacterScreen} />

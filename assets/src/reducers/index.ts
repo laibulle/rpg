@@ -5,6 +5,7 @@ import { Action } from '../actions'
 import { Login_auth } from '../graphql/__generated__/Login'
 import { Characters_characters } from '../graphql/__generated__/Characters'
 import { ChatMessage } from '../screens/LobbyScreen'
+import { Fight_fight } from '../graphql/__generated__/Fight'
 
 export type State = {
   auth: AuthState
@@ -31,6 +32,7 @@ const auth = (state: AuthState = {}, action: Action): AuthState => {
 type GameState = {
   selectedCharacter?: Characters_characters
   messages: ChatMessage[]
+  autoFight?: Fight_fight
 }
 
 const game = (
@@ -42,6 +44,8 @@ const game = (
       return { ...state, selectedCharacter: action.selectedCharacter }
     case 'STORE_STATE':
       return { ...action.state.game }
+    case 'STORE_AUTOFIGHT':
+      return { ...state, autoFight: action.data }
     case 'RESET_MESSAGES':
       return { ...state, messages: [] }
     case 'STORE_MESSAGE':

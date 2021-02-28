@@ -29,3 +29,16 @@ export const UPSERT_CHARACTER = gql`
     }
   }
 `
+
+export const FIGHT = gql`
+  mutation Fight($character_id: ID!) {
+    fight(characterId: $character_id) {
+      winner
+      rounds {
+        damages
+        attacker
+        diceValue
+      }
+    }
+  }
+`

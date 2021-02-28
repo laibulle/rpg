@@ -1,4 +1,5 @@
 import { Characters_characters } from '../graphql/__generated__/Characters'
+import { Fight_fight } from '../graphql/__generated__/Fight'
 import { Login_auth } from '../graphql/__generated__/Login'
 import { State } from '../reducers'
 import { ChatMessage } from '../screens/LobbyScreen'
@@ -10,6 +11,7 @@ export type Action =
       selectedCharacter: Characters_characters
     }
   | { type: 'STORE_STATE'; state: State }
+  | { type: 'STORE_AUTOFIGHT'; data: Fight_fight }
   | { type: 'RESET_MESSAGES' }
   | { type: 'STORE_MESSAGE'; message: ChatMessage }
   | { type: 'RESET' }
@@ -28,6 +30,11 @@ export const resetMessages = (): Action => ({ type: 'RESET_MESSAGES' })
 export const storeMessage = (message: ChatMessage): Action => ({
   type: 'STORE_MESSAGE',
   message,
+})
+
+export const storeAutofight = (data: Fight_fight): Action => ({
+  type: 'STORE_AUTOFIGHT',
+  data,
 })
 
 export const storeSelectedCharacter = (
