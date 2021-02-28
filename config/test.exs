@@ -12,10 +12,7 @@ config :rpg, Rpg.Repo,
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
-config :rpg, Rpg.Mailer,
-  adapter: Bamboo.MailjetAdapter,
-  api_key: System.fetch_env("MAILJET_API_KEY"),
-  api_private_key: System.fetch_env("MAILJET_PRIVATE_KEY")
+config :rpg, Rpg.Mailer, adapter: Bamboo.TestAdapter
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
