@@ -1,0 +1,13 @@
+[Unit]
+Description="RPG"
+After=network.target
+
+[Service]
+User=ubuntu
+Group=staff
+WorkingDirectory=/opt/rpg
+Environment=LANG=en_US.UTF-8,LC_ALL=en_US.UTF-8
+ExecStart=sudo /opt/rpg/start.sh
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,62 @@
+{
+  "builders": [
+    {
+      "type": "openstack",
+      "username": "user-3KazcCHag6pR",
+      "password": "mZseK9nFtB2pcMECxqsf6uZrUGttzXnq",
+      "identity_endpoint": "https://auth.cloud.ovh.net/v3/",
+      "region": "GRA7",
+      "tenant_id": "928e2a006ab244328ecb33b4976aa79c",
+      "image_name": "packer-web-production",
+      "ssh_username": "ubuntu",
+      "source_image_filter": {
+        "filters": {
+          "name": "Ubuntu 20.04"
+        },
+        "most_recent": true
+      },
+      "flavor": "30223b8d-0b3e-4a42-accb-ebc3f5b0194c",
+      "ssh_ip_version": "4",
+      "networks": ["393d06cc-a82c-4dc4-a576-c79e8dd67ba3"]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sudo mkdir -p /opt/scripts && sudo chown ubuntu:staff /opt/scripts"
+      ]
+    },
+    {
+      "type": "file",
+      "sources": [
+        "./files/motd",
+        "./files/config.sh",
+        "./files/common.sh",
+        "./files/postgres.sh",
+        "./files/web.sh",
+        "./files/rpg.zip",
+        "./files/rpg.service",
+        "./files/certbot.sh",
+        "./files/start.sh"
+      ],
+      "destination": "/opt/scripts/"
+    },
+    {
+      "type": "shell",
+      "inline": ["sudo chmod +x /opt/scripts/*.sh"]
+    },
+    {
+      "type": "shell",
+      "inline": ["sudo /opt/scripts/common.sh"]
+    },
+    {
+      "type": "shell",
+      "inline": ["sudo /opt/scripts/web.sh"]
+    },
+    {
+      "type": "shell",
+      "inline": ["sudo /opt/scripts/certbot.sh"]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+export DATABASE_URL="postgres://xxxxxxxx:xxxxxxxxx@postgres:5432/xxxxxxxxxxxxxx"
+export SECRET_KEY_BASE="xxxxxxxxxxxxxxxxxx"
+export DOMAIN="rpg.laibulle.dev"
+export BASE_URL="rpg.laibulle.dev"
+export STRIPE_API_KEY="sk_test_QroDNQ9Ez5tE2tO4NiorCXfU00tzU7t1jX"
+export KEY_FILE="/etc/letsencrypt/live/rpg.laibulle.dev/key.pem"
+export CERT_FILE="/etc/letsencrypt/live/rpg.laibulle.dev/cert.pem"
+export AWS_BUCKET=xxxxxxx
+export AWS_BUCKET_REGION=xxxxxx
+export AWS_ACCESS_KEY_ID=xxxxxxxxxx
+export AWS_SECRET_ACCESS_KEY=xxxxxxxxxxx
+export MAILJET_PRIVATE_KEY=xxxxxxxxx
+export MAILJET_API_KEY=xxxxxxx
