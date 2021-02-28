@@ -18,13 +18,18 @@ defmodule Rpg.Game.GameResolver do
 
   def fight(_parent, %{character_id: character_id}, _resolution) do
     character = Game.get_character!(character_id)
-    {:ok, opponent} = Matchmaking.get_opponent(character)
 
-    AutoFight.fight(
-      %{character: character, health: character.health},
-      %{character: opponent, health: opponent.health}
-    )
-    |> ErrorHelper.format()
+    case Matchmaking.get_opponent(character) do
+      {:ok, opponent} ->
+        {:ok,
+         AutoFight.fight(
+           %{character: character, health: character.health},
+           %{character: opponent, health: opponent.health}
+         )}
+
+      error ->
+        ErrorHelper.format(error)
+    end
   end
 
   def upsert_character(_parent, %{input: input}, %{
