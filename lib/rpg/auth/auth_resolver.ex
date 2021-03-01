@@ -16,7 +16,7 @@ defmodule Rpg.Resolvers.Auth do
   end
 
   def create_user(_parent, %{input: params}, _resolution) do
-    case Map.merge(params, %{"enabled" => true}) |> Auth.create_user() do
+    case Map.merge(params, %{:enabled => true}) |> Auth.create_user() do
       # Create your email
       {:ok, user} ->
         {:ok, activation_code} =
